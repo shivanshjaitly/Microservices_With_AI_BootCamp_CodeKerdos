@@ -1,0 +1,21 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: ai-classifier-service
+  ai:
+    openai:
+      api-key: ${GROQ_API_KEY}
+      base-url: https://api.groq.com/openai
+      chat:
+        options:
+          model: llama-3.3-70b-versatile
+      embedding:
+        enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics

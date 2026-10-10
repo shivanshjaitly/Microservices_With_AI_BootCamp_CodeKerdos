@@ -1,9 +1,11 @@
 package in.coderkerdos.exception;
 
 import java.time.Instant;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -22,15 +24,14 @@ public class GloabalExceptionHandler {
 
         // HomeWORK
 
-        // @ExceptionHandler (MethodArgumentNotValidException.class)
-        // public ResponseEntity<ApiError> handleValuation(
-        //     ResourceNotFoundException ex, HttpServletRequest request){
-
-        //     String message = ex.getBindingResult()
-        //     .getField
-        //     return 
-        
-        //     }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiError> handleValidation(MethodArgumentNotValidException ex, 
+        HttpServletRequest request) {
+        String message = ex.getBindingResult().getFieldErrors().stream()
+                .map(err -> err.getField() + ": " + err.getDefaultMessage())
+                .collect(Collectors.joining("; "));
+        return build(HttpStatus.BAD_REQUEST, message, request.getRequestURI());
+    }
 
 
 
