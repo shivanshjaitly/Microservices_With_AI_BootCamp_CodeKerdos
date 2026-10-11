@@ -1,8 +1,7 @@
-package in.coderkerdos.week_01_ticket_service.controller;
+package in.coderkerdos.ticketservice.controller;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,18 +10,13 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import in.coderkerdos.week_01_ticket_service.dto.CreateTicketRequest;
-import in.coderkerdos.week_01_ticket_service.dto.TicketResponse;
-import in.coderkerdos.week_01_ticket_service.dto.UpdateTicketStatusRequest;
-import in.coderkerdos.week_01_ticket_service.entity.Ticket;
-import in.coderkerdos.week_01_ticket_service.entity.TicketStatus;
-import in.coderkerdos.week_01_ticket_service.repository.TicketRepository;
-import in.coderkerdos.week_01_ticket_service.service.TicketService;
+import in.coderkerdos.ticketservice.dto.CreateTicketRequest;
+import in.coderkerdos.ticketservice.dto.TicketResponse;
+import in.coderkerdos.ticketservice.dto.UpdateTicketStatusRequest;
+import in.coderkerdos.ticketservice.service.TicketService;
 import jakarta.validation.Valid;
 
 @RestController 

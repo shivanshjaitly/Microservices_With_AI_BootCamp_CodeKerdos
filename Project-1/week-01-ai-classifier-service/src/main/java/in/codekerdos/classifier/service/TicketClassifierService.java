@@ -1,7 +1,15 @@
 package in.codekerdos.classifier.service;
 
 import org.springframework.stereotype.Service;
+
+import in.codekerdos.classifier.dto.ClassifyRequest;
+import in.codekerdos.classifier.dto.TicketClassification;
+
+import java.util.Map;
+
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.chat.prompt.PromptTemplate;
 
 @Service 
 public class TicketClassifierService {
@@ -26,4 +34,18 @@ public class TicketClassifierService {
     );
 
     private final ChatClient chatClient;
+
+    public TicketClassifierService(ChatClient.Builder chatClientBuilder){
+        this.chatClient = chatClientBuilder.build();
+    }
+
+    public TicketClassification classify(ClassifyRequest request){
+        Prompt prompt = CLASSIFY_TEMPLATE.create(Map.of(
+            "subject", request.subject(),
+            "description", request.description()
+        ));
+        return 
+        chatClient.prompt(prompt).call().entity(TicketClassification.class);
+
+    }
 }

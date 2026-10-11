@@ -1,6 +1,6 @@
-package in.coderkerdos.week_01_ticket_service.dto;
+package in.coderkerdos.ticketservice.dto;
 
-import in.coderkerdos.week_01_ticket_service.entity.TicketStatus;
+import in.coderkerdos.ticketservice.entity.TicketStatus;
 import jakarta.validation.constraints.NotNull;
 
 public record UpdateTicketStatusRequest (

@@ -1,4 +1,4 @@
-package in.coderkerdos.exception;
+package in.coderkerdos.ticketservice.exception;
 
 import java.time.Instant;
 

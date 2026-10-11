@@ -1,4 +1,4 @@
-package in.coderkerdos.week_01_ticket_service.entity;
+package in.coderkerdos.ticketservice.entity;
 
 import java.time.Instant;
 

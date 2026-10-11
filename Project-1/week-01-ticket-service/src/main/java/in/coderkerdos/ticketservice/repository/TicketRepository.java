@@ -1,8 +1,8 @@
-package in.coderkerdos.week_01_ticket_service.repository;
+package in.coderkerdos.ticketservice.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import in.coderkerdos.week_01_ticket_service.entity.Ticket;
+import in.coderkerdos.ticketservice.entity.Ticket;
 
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
     

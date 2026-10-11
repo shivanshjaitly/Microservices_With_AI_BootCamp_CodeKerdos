@@ -1,4 +1,4 @@
-package in.coderkerdos.week_01_ticket_service.dto;
+package in.coderkerdos.ticketservice.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

@@ -1,4 +1,4 @@
-package in.coderkerdos.week_01_ticket_service;
+package in.coderkerdos.ticketservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

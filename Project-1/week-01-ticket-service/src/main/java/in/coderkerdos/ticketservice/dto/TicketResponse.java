@@ -1,9 +1,9 @@
-package in.coderkerdos.week_01_ticket_service.dto;
+package in.coderkerdos.ticketservice.dto;
 
 import java.time.Instant;
 
-import in.coderkerdos.week_01_ticket_service.entity.Ticket;
-import in.coderkerdos.week_01_ticket_service.entity.TicketStatus;
+import in.coderkerdos.ticketservice.entity.Ticket;
+import in.coderkerdos.ticketservice.entity.TicketStatus;
 
 public record TicketResponse(
     Long id,

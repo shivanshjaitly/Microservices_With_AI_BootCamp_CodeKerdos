@@ -7,6 +7,11 @@ spring:
   profiles:
     active: h2
 
+app:
+  classifier-service:
+    base-url: ${CLASSIFIER_SERVICE_BASE_URL:http://localhost:8090}
+    timeout-ms: 4000
+
 management:
   endpoints:
     web:
