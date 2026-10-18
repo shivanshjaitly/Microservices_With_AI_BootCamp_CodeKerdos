@@ -19,3 +19,14 @@ management:
     web:
       exposure:
         include: health,info,metrics
+
+resilience4j:
+  retry:
+    instances:
+      groq-classify:
+        max-attempts: 3
+        wait-duration: 500ms
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+        retry-exceptions:
+          - in.codekerdos.classifier.exception.AiProviderException

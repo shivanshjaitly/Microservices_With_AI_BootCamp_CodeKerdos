@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import in.codekerdos.classifier.exception.AiProviderException;
 
 import java.time.Instant;
 import java.util.stream.Collectors;
@@ -39,5 +40,11 @@ public class GlobalExceptionHandler {
     private ResponseEntity<ApiError> build(HttpStatus status, String message, String path) {
         return ResponseEntity.status(status)
                 .body(new ApiError(Instant.now(), status.value(), message, path));
+    }
+
+    @ExceptionHandler(AiProviderException.class)
+    public ResponseEntity<ApiError> handleAiProvider(AiProviderException ex, HttpServletRequest request){
+        return 
+        build(HttpStatus.SERVICE_UNAVAILABLE, ex.getMessage(), request.getRequestURI());
     }
 }

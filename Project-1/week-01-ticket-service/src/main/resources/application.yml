@@ -55,3 +55,44 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+# Resilience4j around the one unreliable dependency this service has: the AI
+# Classifier Service (and, transitively, Groq). Decorator order for annotations
+# stacked on ClassifierClient.classify(): Retry wraps CircuitBreaker, so the
+# fallback lives on the @Retry instance (see Topic 6).
+resilience4j:
+  circuitbreaker:
+    instances:
+      classifier:
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 15s
+        permitted-number-of-calls-in-half-open-state: 3
+        automatic-transition-from-open-to-half-open-enabled: true
+  retry:
+    instances:
+      classifier:
+        max-attempts: 3
+        wait-duration: 300ms
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+        # Don't retry once the breaker is already OPEN — CallNotPermittedException
+        # means "don't bother," retrying it just burns the 3 attempts instantly.
+        ignore-exceptions:
+          - io.github.resilience4j.circuitbreaker.CallNotPermittedException
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+
+app:
+  classifier-service:
+    base-url: ${CLASSIFIER_SERVICE_BASE_URL:http://localhost:8090}
+    timeout-ms: 4000  

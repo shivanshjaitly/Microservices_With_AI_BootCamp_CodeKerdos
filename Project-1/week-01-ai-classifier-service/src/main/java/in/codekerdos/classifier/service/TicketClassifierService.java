@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 
 import in.codekerdos.classifier.dto.ClassifyRequest;
 import in.codekerdos.classifier.dto.TicketClassification;
+import in.codekerdos.classifier.exception.AiProviderException;
+import io.github.resilience4j.retry.annotation.Retry;
 
 import java.util.Map;
 
@@ -39,13 +41,33 @@ public class TicketClassifierService {
         this.chatClient = chatClientBuilder.build();
     }
 
+    @Retry (name = "groq-classify")
     public TicketClassification classify(ClassifyRequest request){
         Prompt prompt = CLASSIFY_TEMPLATE.create(Map.of(
-            "subject", request.subject(),
-            "description", request.description()
+             "subject", request.subject(),
+             "description", request.description()
         ));
-        return 
-        chatClient.prompt(prompt).call().entity(TicketClassification.class);
-
+        try{
+            TicketClassification result = chatClient.prompt(prompt)
+            .call().entity(TicketClassification.class);
+            
+            if(result == null){
+                throw new AiProviderException("Groq returned and empty classification");
+        }return  result;
+    }catch(AiProviderException ex){
+        throw ex;
+        }catch(Exception ex){
+            throw new AiProviderException("Groq failed: " + ex.getMessage());
+        }
     }
+
+    // public TicketClassification classify(ClassifyRequest request){
+    //     Prompt prompt = CLASSIFY_TEMPLATE.create(Map.of(
+    //         "subject", request.subject(),
+    //         "description", request.description()
+    //     ));
+    //     return 
+    //     chatClient.prompt(prompt).call().entity(TicketClassification.class);
+
+    // }
 }
