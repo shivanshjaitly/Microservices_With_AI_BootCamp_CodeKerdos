@@ -1,0 +1,49 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      # Explicit routes (not the discovery locator) — clearer to teach and to
+      # read than magic auto-generated /<service-id>/** routes. Route id ==
+      # the target Eureka application name in every case.
+      routes:
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            # /api/auth/** (login/register) and /api/orders/** both live on
+            # order-service, so both patterns route to the same target here.
+            - Path=/api/auth/**,/api/orders/**
+        - id: inventory-service
+          uri: lb://inventory-service
+          predicates:
+            - Path=/api/inventory/**
+        - id: payment-service
+          uri: lb://payment-service
+          predicates:
+            - Path=/api/payments/**
+        - id: notification-service
+          uri: lb://notification-service
+          predicates:
+            - Path=/api/notifications/**
+        - id: ai-risk-service
+          uri: lb://ai-risk-service
+          predicates:
+            - Path=/api/risk/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,gateway
