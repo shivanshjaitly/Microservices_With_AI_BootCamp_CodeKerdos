@@ -1,0 +1,13 @@
+# Overrides layered on top of application.yml (h2 profile) for
+# @SpringBootTest — turns off registration/connection attempts against
+# infra that isn't running in a plain `mvn test`.
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
+
+spring:
+  kafka:
+    listener:
+      auto-startup: false

@@ -14,6 +14,8 @@
     <groupId>in.codekerdos</groupId>
     <artifactId>week-03-eureka-server</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <name>CodeKerdos Week 3 - Eureka Server</name>
+    <description>Project #2 — Order Platform with AI Risk Scoring: service registry</description>
 
     <properties>
         <java.version>17</java.version>
@@ -41,8 +43,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-
-		
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -53,4 +58,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
